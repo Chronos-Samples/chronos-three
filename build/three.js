@@ -203,7 +203,7 @@
 		constructor(eventData, options) {
 			Object.assign(this, eventData);
 
-			if (options && !options.bubbles) {
+			if (options && !options.bubbles || !options) {
 				this.isBubblingStopped = true;
 			}
 		}
