@@ -4,10 +4,9 @@
 
 class Event {
 
-	constructor( type, payload, options ) {
+	constructor( eventData, options ) {
 
-		this.type = type;
-		this.payload = payload;
+		Object.assign( this, eventData );
 
 		if ( options && ! options.bubbles ) {
 
@@ -78,6 +77,12 @@ class EventDispatcher {
 	}
 
 	dispatchEvent( event ) {
+
+		if ( ! ( 'stopQueue' in event ) ) {
+
+			event = new Event( event );
+
+		}
 
 		let typedListeners = this.listeners.get( event.type ) || [];
 

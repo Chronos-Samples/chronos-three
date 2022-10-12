@@ -111,7 +111,7 @@
 
 		window.addEventListener( 'click', () => {
 
-			box.dispatchEvent( new THREE.Event( 'test', { param1: 'test' } ) );
+			box.dispatchEvent( new THREE.Event( { type: 'test', param1: 'test' } ) );
 
 		} );
 		window.addEventListener( 'resize', onWindowResize );

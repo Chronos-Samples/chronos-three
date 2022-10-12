@@ -198,11 +198,10 @@ const _SRGBAFormat = 1035; // fallback for WebGL 1
  * https://github.com/mrdoob/eventdispatcher.js/
  */
 class Event {
-	constructor(type, payload, options) {
-		this.type = type;
-		this.payload = payload;
+	constructor(eventData, options) {
+		Object.assign(this, eventData);
 
-		if (options && options.bubbles) {
+		if (options && !options.bubbles) {
 			this.isBubblingStopped = true;
 		}
 	}
@@ -255,6 +254,10 @@ class EventDispatcher {
 	}
 
 	dispatchEvent(event) {
+		if (!('stopQueue' in event)) {
+			event = new Event(event);
+		}
+
 		let typedListeners = this.listeners.get(event.type) || [];
 		if (!event.target) event.target = this; // Make a copy, in case listeners are removed while iterating.
 
