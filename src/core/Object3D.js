@@ -41,6 +41,7 @@ class Object3D extends EventDispatcher {
 		this.type = 'Object3D';
 
 		this.parent = null;
+		this.scene = null;
 		this.children = [];
 
 		this.up = Object3D.DefaultUp.clone();
