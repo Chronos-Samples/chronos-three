@@ -5818,12 +5818,11 @@
 		}
 
 		setVisibility(key, value) {
-			value ? this.visibilityMap.set(key, value) : this.visibilityMap.delete(key);
+			value ? this.visibilityMap.delete(key) : this.visibilityMap.set(key, value);
 		}
 
 		constructor() {
 			super();
-			this.visibilityMap = new Map();
 			this.isObject3D = true;
 			Object.defineProperty(this, 'id', {
 				value: _object3DId++
@@ -5885,6 +5884,7 @@
 			this.matrixAutoUpdate = Object3D.DefaultMatrixAutoUpdate;
 			this.matrixWorldNeedsUpdate = false;
 			this.layers = new Layers();
+			this.visibilityMap = new Map();
 			this.visible = true;
 			this.castShadow = false;
 			this.receiveShadow = false;
@@ -35944,3 +35944,4 @@
 	Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGhyZWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIn0=

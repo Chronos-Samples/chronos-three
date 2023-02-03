@@ -27,8 +27,6 @@ const _removedEvent = { type: 'removed' };
 
 class Object3D extends EventDispatcher {
 
-	visibilityMap = new Map();
-
 	set visible( value ) {
 
 		this.visibilityMap.set( 'default', value );
@@ -49,7 +47,7 @@ class Object3D extends EventDispatcher {
 
 	setVisibility( key, value ) {
 
-		value ? this.visibilityMap.set( key, value ) : this.visibilityMap.delete( key );
+		value ? this.visibilityMap.delete( key ) : this.visibilityMap.set( key, value );
 
 	}
 
@@ -128,6 +126,7 @@ class Object3D extends EventDispatcher {
 		this.matrixWorldNeedsUpdate = false;
 
 		this.layers = new Layers();
+		this.visibilityMap = new Map();
 		this.visible = true;
 
 		this.castShadow = false;
