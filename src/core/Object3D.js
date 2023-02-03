@@ -1,7 +1,7 @@
 import { Quaternion } from '../math/Quaternion.js';
 import { Vector3 } from '../math/Vector3.js';
 import { Matrix4 } from '../math/Matrix4.js';
-import { EventDispatcher, ThreeEvent } from './EventDispatcher.js';
+import { EventDispatcher } from './EventDispatcher.js';
 import { Euler } from '../math/Euler.js';
 import { Layers } from './Layers.js';
 import { Matrix3 } from '../math/Matrix3.js';
@@ -26,6 +26,32 @@ const _addedEvent = { type: 'added' };
 const _removedEvent = { type: 'removed' };
 
 class Object3D extends EventDispatcher {
+
+	visibilityMap = new Map();
+
+	set visible( value ) {
+
+		this.visibilityMap.set( 'default', value );
+
+	}
+
+	get visible() {
+
+		for ( const entry of this.visibilityMap ) {
+
+			if ( entry[ 1 ] === false ) return false;
+
+		}
+
+		return true;
+
+	}
+
+	setVisibility( key, value ) {
+
+		value ? this.visibilityMap.set( key, value ) : this.visibilityMap.delete( key );
+
+	}
 
 	constructor() {
 

@@ -5803,8 +5803,25 @@ const _removedEvent = {
 };
 
 class Object3D extends EventDispatcher {
+	set visible(value) {
+		this.visibilityMap.set('default', value);
+	}
+
+	get visible() {
+		for (const entry of this.visibilityMap) {
+			if (entry[1] === false) return false;
+		}
+
+		return true;
+	}
+
+	setVisibility(key, value) {
+		value ? this.visibilityMap.set(key, value) : this.visibilityMap.delete(key);
+	}
+
 	constructor() {
 		super();
+		this.visibilityMap = new Map();
 		this.isObject3D = true;
 		Object.defineProperty(this, 'id', {
 			value: _object3DId++
@@ -5813,6 +5830,7 @@ class Object3D extends EventDispatcher {
 		this.name = '';
 		this.type = 'Object3D';
 		this.parent = null;
+		this.scene = null;
 		this.children = [];
 		this.up = Object3D.DefaultUp.clone();
 		const position = new Vector3();
@@ -35920,4 +35938,3 @@ exports.ZeroSlopeEnding = ZeroSlopeEnding;
 exports.ZeroStencilOp = ZeroStencilOp;
 exports._SRGBAFormat = _SRGBAFormat;
 exports.sRGBEncoding = sRGBEncoding;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGhyZWUuY2pzIiwic291cmNlcyI6W10sInNvdXJjZXNDb250ZW50IjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9

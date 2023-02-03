@@ -5805,8 +5805,25 @@
 	};
 
 	class Object3D extends EventDispatcher {
+		set visible(value) {
+			this.visibilityMap.set('default', value);
+		}
+
+		get visible() {
+			for (const entry of this.visibilityMap) {
+				if (entry[1] === false) return false;
+			}
+
+			return true;
+		}
+
+		setVisibility(key, value) {
+			value ? this.visibilityMap.set(key, value) : this.visibilityMap.delete(key);
+		}
+
 		constructor() {
 			super();
+			this.visibilityMap = new Map();
 			this.isObject3D = true;
 			Object.defineProperty(this, 'id', {
 				value: _object3DId++
@@ -5815,6 +5832,7 @@
 			this.name = '';
 			this.type = 'Object3D';
 			this.parent = null;
+			this.scene = null;
 			this.children = [];
 			this.up = Object3D.DefaultUp.clone();
 			const position = new Vector3();
@@ -35926,4 +35944,3 @@
 	Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGhyZWUuanMiLCJzb3VyY2VzIjpbXSwic291cmNlc0NvbnRlbnQiOltdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIn0=
