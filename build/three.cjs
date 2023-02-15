@@ -6037,7 +6037,9 @@ class Object3D extends EventDispatcher {
 
 			object.parent = this;
 			this.children.push(object);
-			object.dispatchEvent(_addedEvent);
+			object.dispatchEvent(new Event(_addedEvent, {
+				bubbles: true
+			}));
 		} else {
 			console.error('THREE.Object3D.add: object not an instance of THREE.Object3D.', object);
 		}
@@ -6059,7 +6061,9 @@ class Object3D extends EventDispatcher {
 		if (index !== -1) {
 			object.parent = null;
 			this.children.splice(index, 1);
-			object.dispatchEvent(_removedEvent);
+			object.dispatchEvent(new Event(_removedEvent, {
+				bubbles: true
+			}));
 		}
 
 		return this;
@@ -6079,7 +6083,9 @@ class Object3D extends EventDispatcher {
 		for (let i = 0; i < this.children.length; i++) {
 			const object = this.children[i];
 			object.parent = null;
-			object.dispatchEvent(_removedEvent);
+			object.dispatchEvent(new Event(_removedEvent, {
+				bubbles: true
+			}));
 		}
 
 		this.children.length = 0;
@@ -35938,4 +35944,3 @@ exports.ZeroSlopeEnding = ZeroSlopeEnding;
 exports.ZeroStencilOp = ZeroStencilOp;
 exports._SRGBAFormat = _SRGBAFormat;
 exports.sRGBEncoding = sRGBEncoding;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGhyZWUuY2pzIiwic291cmNlcyI6W10sInNvdXJjZXNDb250ZW50IjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiJ9
