@@ -191,6 +191,8 @@ const _SRGBAFormat = 1035; // fallback for WebGL 1
 
 class Event {
 
+	path = null;
+
 	constructor( eventData, options ) {
 
 		Object.assign( this, eventData );
@@ -275,6 +277,21 @@ class EventDispatcher {
 
 		if ( ! event.target ) event.target = this;
 
+		if ( ! event.path ) {
+
+			const path = [];
+			let current = this;
+			while ( current.parent ) {
+
+				path.push( current.parent );
+				current = current.parent;
+
+			}
+
+			event.path = path;
+
+		}
+
 		// Make a copy, in case listeners are removed while iterating.
 		typedListeners = typedListeners.slice( 0 );
 
@@ -291,9 +308,9 @@ class EventDispatcher {
 
 		}
 
-		if ( this.parent && ! event.isBubblingStopped ) {
+		if ( this.path.length && ! event.isBubblingStopped ) {
 
-			this.parent.dispatchEvent( event );
+			this.path.pop().dispatchEvent( event );
 
 		}
 
@@ -7831,10 +7848,10 @@ class Object3D extends EventDispatcher {
 
 		if ( index !== - 1 ) {
 
+			object.dispatchEvent( new Event( _removedEvent, { bubbles: true } ) );
+
 			object.parent = null;
 			this.children.splice( index, 1 );
-
-			object.dispatchEvent( new Event( _removedEvent, { bubbles: true } ) );
 
 		}
 
@@ -7865,6 +7882,7 @@ class Object3D extends EventDispatcher {
 			object.parent = null;
 
 			object.dispatchEvent( new Event( _removedEvent, { bubbles: true } ) );
+
 		}
 
 		this.children.length = 0;

@@ -201,6 +201,7 @@
 	 */
 	class Event {
 		constructor(eventData, options) {
+			this.path = null;
 			Object.assign(this, eventData);
 
 			if (options && !options.bubbles || !options) {
@@ -261,7 +262,20 @@
 			}
 
 			let typedListeners = this.listeners.get(event.type) || [];
-			if (!event.target) event.target = this; // Make a copy, in case listeners are removed while iterating.
+			if (!event.target) event.target = this;
+
+			if (!event.path) {
+				const path = [];
+				let current = this;
+
+				while (current.parent) {
+					path.push(current.parent);
+					current = current.parent;
+				}
+
+				event.path = path;
+			} // Make a copy, in case listeners are removed while iterating.
+
 
 			typedListeners = typedListeners.slice(0);
 
@@ -274,8 +288,8 @@
 				typedListeners[i].callback.call(this, event);
 			}
 
-			if (this.parent && !event.isBubblingStopped) {
-				this.parent.dispatchEvent(event);
+			if (this.path.length && !event.isBubblingStopped) {
+				this.path.pop().dispatchEvent(event);
 			}
 		}
 
@@ -6061,11 +6075,11 @@
 			const index = this.children.indexOf(object);
 
 			if (index !== -1) {
-				object.parent = null;
-				this.children.splice(index, 1);
 				object.dispatchEvent(new Event(_removedEvent, {
 					bubbles: true
 				}));
+				object.parent = null;
+				this.children.splice(index, 1);
 			}
 
 			return this;
