@@ -121,9 +121,9 @@ class EventDispatcher {
 
 		}
 
-		if ( this.path.length && ! event.isBubblingStopped ) {
+		if ( event.path.length && ! event.isBubblingStopped ) {
 
-			this.path.pop().dispatchEvent( event );
+			event.path.pop().dispatchEvent( event );
 
 		}
 
