@@ -286,8 +286,8 @@ class EventDispatcher {
 			typedListeners[i].callback.call(this, event);
 		}
 
-		if (this.path.length && !event.isBubblingStopped) {
-			this.path.pop().dispatchEvent(event);
+		if (event.path.length && !event.isBubblingStopped) {
+			event.path.pop().dispatchEvent(event);
 		}
 	}
 
