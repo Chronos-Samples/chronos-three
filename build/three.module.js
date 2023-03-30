@@ -267,12 +267,6 @@ class EventDispatcher {
 
 	dispatchEvent( event ) {
 
-		if ( ! ( 'stopQueue' in event ) ) {
-
-			event = new Event( event );
-
-		}
-
 		let typedListeners = this.listeners.get( event.type ) || [];
 
 		if ( ! event.target ) event.target = this;
