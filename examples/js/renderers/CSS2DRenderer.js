@@ -97,18 +97,18 @@
 
 				if ( object.isCSS2DObject ) {
 
-					this._vector.setFromMatrixPosition( object.matrixWorld );
+					_this._vector.setFromMatrixPosition( object.matrixWorld );
 
-					this._vector.applyMatrix4( this._viewProjectionMatrix );
+					_this._vector.applyMatrix4( _this._viewProjectionMatrix );
 
-					const visible = object.visible === true && this._vector.z >= - 1 && this._vector.z <= 1 && object.layers.test( camera.layers ) === true;
+					const visible = object.visible === true && _this._vector.z >= - 1 && _this._vector.z <= 1 && object.layers.test( camera.layers ) === true;
 					object.element.style.display = visible === true ? '' : 'none';
 
 					if ( visible === true ) {
 
 						object.onBeforeRender( _this, scene, camera );
 						const element = object.element;
-						element.style.transform = 'translate(-50%,-50%) translate(' + ( this._vector.x * _widthHalf + _widthHalf ) + 'px,' + ( - this._vector.y * _heightHalf + _heightHalf ) + 'px)';
+						element.style.transform = 'translate(-50%,-50%) translate(' + ( _this._vector.x * _widthHalf + _widthHalf ) + 'px,' + ( - _this._vector.y * _heightHalf + _heightHalf ) + 'px)';
 
 						if ( element.parentNode !== domElement ) {
 
@@ -137,11 +137,11 @@
 
 			function getDistanceToSquared( object1, object2 ) {
 
-				this._a.setFromMatrixPosition( object1.matrixWorld );
+				_this._a.setFromMatrixPosition( object1.matrixWorld );
 
-				this._b.setFromMatrixPosition( object2.matrixWorld );
+				_this._b.setFromMatrixPosition( object2.matrixWorld );
 
-				return this._a.distanceToSquared( this._b );
+				return _this._a.distanceToSquared( _this._b );
 
 			}
 
