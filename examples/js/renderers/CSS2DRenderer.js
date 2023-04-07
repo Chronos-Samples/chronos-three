@@ -36,18 +36,13 @@
 
 	} //
 
-
-	const _vector = new THREE.Vector3();
-
-	const _viewMatrix = new THREE.Matrix4();
-
-	const _viewProjectionMatrix = new THREE.Matrix4();
-
-	const _a = new THREE.Vector3();
-
-	const _b = new THREE.Vector3();
-
 	class CSS2DRenderer {
+
+		_vector = new THREE.Vector3();
+		_viewMatrix = new THREE.Matrix4();
+		_viewProjectionMatrix = new THREE.Matrix4();
+		_a = new THREE.Vector3();
+		_b = new THREE.Vector3();
 
 		constructor( parameters = {} ) {
 
@@ -78,9 +73,9 @@
 				if ( scene.autoUpdate === true ) scene.updateMatrixWorld();
 				if ( camera.parent === null ) camera.updateMatrixWorld();
 
-				_viewMatrix.copy( camera.matrixWorldInverse );
+				this._viewMatrix.copy( camera.matrixWorldInverse );
 
-				_viewProjectionMatrix.multiplyMatrices( camera.projectionMatrix, _viewMatrix );
+				this._viewProjectionMatrix.multiplyMatrices( camera.projectionMatrix, this._viewMatrix );
 
 				renderObject( scene, scene, camera );
 				zOrder( scene );
@@ -102,18 +97,18 @@
 
 				if ( object.isCSS2DObject ) {
 
-					_vector.setFromMatrixPosition( object.matrixWorld );
+					this._vector.setFromMatrixPosition( object.matrixWorld );
 
-					_vector.applyMatrix4( _viewProjectionMatrix );
+					this._vector.applyMatrix4( this._viewProjectionMatrix );
 
-					const visible = object.visible === true && _vector.z >= - 1 && _vector.z <= 1 && object.layers.test( camera.layers ) === true;
+					const visible = object.visible === true && this._vector.z >= - 1 && this._vector.z <= 1 && object.layers.test( camera.layers ) === true;
 					object.element.style.display = visible === true ? '' : 'none';
 
 					if ( visible === true ) {
 
 						object.onBeforeRender( _this, scene, camera );
 						const element = object.element;
-						element.style.transform = 'translate(-50%,-50%) translate(' + ( _vector.x * _widthHalf + _widthHalf ) + 'px,' + ( - _vector.y * _heightHalf + _heightHalf ) + 'px)';
+						element.style.transform = 'translate(-50%,-50%) translate(' + ( this._vector.x * _widthHalf + _widthHalf ) + 'px,' + ( - this._vector.y * _heightHalf + _heightHalf ) + 'px)';
 
 						if ( element.parentNode !== domElement ) {
 
@@ -142,11 +137,11 @@
 
 			function getDistanceToSquared( object1, object2 ) {
 
-				_a.setFromMatrixPosition( object1.matrixWorld );
+				this._a.setFromMatrixPosition( object1.matrixWorld );
 
-				_b.setFromMatrixPosition( object2.matrixWorld );
+				this._b.setFromMatrixPosition( object2.matrixWorld );
 
-				return _a.distanceToSquared( _b );
+				return this._a.distanceToSquared( this._b );
 
 			}
 
