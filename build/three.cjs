@@ -5818,9 +5818,7 @@ const _visibilityEvent = {
 class Object3D extends EventDispatcher {
 	set visible(value) {
 		this.visibilityMap.set('default', value);
-		this.dispatchEvent(new Event({
-			type: _visibilityEvent
-		}, {
+		this.dispatchEvent(new Event(_visibilityEvent, {
 			bubbles: true
 		}));
 	}
@@ -5835,9 +5833,7 @@ class Object3D extends EventDispatcher {
 
 	setVisibility(key, value) {
 		value ? this.visibilityMap.delete(key) : this.visibilityMap.set(key, value);
-		this.dispatchEvent(new Event({
-			type: _visibilityEvent
-		}, {
+		this.dispatchEvent(new Event(_visibilityEvent, {
 			bubbles: true
 		}));
 	}
