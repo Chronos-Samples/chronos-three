@@ -7481,6 +7481,7 @@ const _zAxis = /*@__PURE__*/ new Vector3( 0, 0, 1 );
 
 const _addedEvent = { type: 'added' };
 const _removedEvent = { type: 'removed' };
+const _visibilityEvent = { type: 'Object:Visibility Changed' };
 
 class Object3D extends EventDispatcher {
 
@@ -7505,6 +7506,8 @@ class Object3D extends EventDispatcher {
 	setVisibility( key, value ) {
 
 		value ? this.visibilityMap.delete( key ) : this.visibilityMap.set( key, value );
+
+		this.dispatchEvent( new Event( { type: _visibilityEvent } ) );
 
 	}
 

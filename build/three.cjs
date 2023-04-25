@@ -5811,6 +5811,9 @@ const _addedEvent = {
 const _removedEvent = {
 	type: 'removed'
 };
+const _visibilityEvent = {
+	type: 'Object:Visibility Changed'
+};
 
 class Object3D extends EventDispatcher {
 	set visible(value) {
@@ -5827,6 +5830,9 @@ class Object3D extends EventDispatcher {
 
 	setVisibility(key, value) {
 		value ? this.visibilityMap.delete(key) : this.visibilityMap.set(key, value);
+		this.dispatchEvent(new Event({
+			type: _visibilityEvent
+		}));
 	}
 
 	constructor() {
