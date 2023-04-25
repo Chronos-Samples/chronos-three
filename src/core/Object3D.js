@@ -32,6 +32,8 @@ class Object3D extends EventDispatcher {
 
 		this.visibilityMap.set( 'default', value );
 
+		this.dispatchEvent( new Event( { type: _visibilityEvent }, { bubbles: true } ) );
+
 	}
 
 	get visible() {
@@ -50,7 +52,7 @@ class Object3D extends EventDispatcher {
 
 		value ? this.visibilityMap.delete( key ) : this.visibilityMap.set( key, value );
 
-		this.dispatchEvent( new Event( { type: _visibilityEvent } ) );
+		this.dispatchEvent( new Event( { type: _visibilityEvent }, { bubbles: true } ) );
 
 	}
 
