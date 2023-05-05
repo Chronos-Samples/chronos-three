@@ -7480,7 +7480,6 @@ const _yAxis = /*@__PURE__*/ new Vector3( 0, 1, 0 );
 const _zAxis = /*@__PURE__*/ new Vector3( 0, 0, 1 );
 
 const _addedEvent = { type: 'added' };
-const _removedEvent = { type: 'removed' };
 const _visibilityEvent = { type: 'Object:Visibility Changed' };
 
 class Object3D extends EventDispatcher {
@@ -7847,7 +7846,7 @@ class Object3D extends EventDispatcher {
 
 		if ( index !== - 1 ) {
 
-			object.dispatchEvent( new Event( _removedEvent, { bubbles: true } ) );
+			object.dispatchEvent( new Event( { type: 'removed', prevParent: object.parent }, { bubbles: true } ) );
 
 			object.parent = null;
 			this.children.splice( index, 1 );
@@ -7880,7 +7879,7 @@ class Object3D extends EventDispatcher {
 
 			object.parent = null;
 
-			object.dispatchEvent( new Event( _removedEvent, { bubbles: true } ) );
+			object.dispatchEvent( new Event( { type: 'removed', prevParent: object.parent }, { bubbles: true } ) );
 
 		}
 

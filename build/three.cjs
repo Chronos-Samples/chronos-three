@@ -5808,9 +5808,6 @@ const _zAxis = /*@__PURE__*/new Vector3(0, 0, 1);
 const _addedEvent = {
 	type: 'added'
 };
-const _removedEvent = {
-	type: 'removed'
-};
 const _visibilityEvent = {
 	type: 'Object:Visibility Changed'
 };
@@ -6078,7 +6075,10 @@ class Object3D extends EventDispatcher {
 		const index = this.children.indexOf(object);
 
 		if (index !== -1) {
-			object.dispatchEvent(new Event(_removedEvent, {
+			object.dispatchEvent(new Event({
+				type: 'removed',
+				prevParent: object.parent
+			}, {
 				bubbles: true
 			}));
 			object.parent = null;
@@ -6102,7 +6102,10 @@ class Object3D extends EventDispatcher {
 		for (let i = 0; i < this.children.length; i++) {
 			const object = this.children[i];
 			object.parent = null;
-			object.dispatchEvent(new Event(_removedEvent, {
+			object.dispatchEvent(new Event({
+				type: 'removed',
+				prevParent: object.parent
+			}, {
 				bubbles: true
 			}));
 		}

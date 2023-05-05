@@ -5810,9 +5810,6 @@
 	const _addedEvent = {
 		type: 'added'
 	};
-	const _removedEvent = {
-		type: 'removed'
-	};
 	const _visibilityEvent = {
 		type: 'Object:Visibility Changed'
 	};
@@ -6080,7 +6077,10 @@
 			const index = this.children.indexOf(object);
 
 			if (index !== -1) {
-				object.dispatchEvent(new Event(_removedEvent, {
+				object.dispatchEvent(new Event({
+					type: 'removed',
+					prevParent: object.parent
+				}, {
 					bubbles: true
 				}));
 				object.parent = null;
@@ -6104,7 +6104,10 @@
 			for (let i = 0; i < this.children.length; i++) {
 				const object = this.children[i];
 				object.parent = null;
-				object.dispatchEvent(new Event(_removedEvent, {
+				object.dispatchEvent(new Event({
+					type: 'removed',
+					prevParent: object.parent
+				}, {
 					bubbles: true
 				}));
 			}

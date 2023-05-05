@@ -390,7 +390,7 @@ class Object3D extends EventDispatcher {
 
 		if ( index !== - 1 ) {
 
-			object.dispatchEvent( new Event( _removedEvent, { bubbles: true } ) );
+			object.dispatchEvent( new Event( { type: 'removed', prevParent: object.parent }, { bubbles: true } ) );
 
 			object.parent = null;
 			this.children.splice( index, 1 );
@@ -423,7 +423,7 @@ class Object3D extends EventDispatcher {
 
 			object.parent = null;
 
-			object.dispatchEvent( new Event( _removedEvent, { bubbles: true } ) );
+			object.dispatchEvent( new Event( { type: 'removed', prevParent: object.parent }, { bubbles: true } ) );
 
 		}
 
