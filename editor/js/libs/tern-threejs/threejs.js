@@ -516,7 +516,7 @@
           "!type": "string",
           "!doc": "[link:http://en.wikipedia.org/wiki/Universally_unique_identifier UUID] of this object instance.\n\t\tThis gets automatically assigned, so this shouldn't be edited."
         },
-        "name": {
+        "_name": {
           "!type": "string",
           "!doc": "Optional name of the object (doesn't need to be unique)."
         },
