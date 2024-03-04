@@ -5837,6 +5837,22 @@
 			}));
 		}
 
+		get name() {
+			return this._name;
+		}
+
+		set name(value) {
+			if (this._name === value) return;
+			const prevName = this.name;
+			this._name = value;
+			this.dispatchEvent(new Event({
+				type: 'nameChange',
+				prevName: prevName
+			}, {
+				bubbles: false
+			}));
+		}
+
 		constructor() {
 			super();
 			this.isObject3D = true;
@@ -5844,7 +5860,7 @@
 				value: _object3DId++
 			});
 			this.uuid = generateUUID();
-			this.name = '';
+			this._name = '';
 			this.type = 'Object3D';
 			this.parent = null;
 			this.scene = null;
